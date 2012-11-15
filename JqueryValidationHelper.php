@@ -94,8 +94,11 @@ class JqueryValidationHelper extends AppHelper {
 			}
 			unset($options['jquery-validation']);
 		}
-		$model = $this->Form->defaultModel;
-		$meta = $this->meta($model, $fieldName);
+
+		$model = substr($fieldName, 0, strpos($fieldName, '.'));
+		$field = substr($fieldName, strrpos($fieldName, '.')+1, strlen($fieldName));
+				
+		$meta = $this->meta($model, $field);
 		$options['data-validate'] = json_encode($meta);
 		$response = $this->_addJs($map);
 		$response .= $this->Form->input($fieldName, $options);
